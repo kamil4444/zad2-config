@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lab10-server
+  annotations:
+    kubernetes.io/change-cause: "v1.9"
+  name: lab10-deployment
+  namespace: lab10
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: lab10-server
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 2
+  template:
+    metadata:
+      labels:
+        app: lab10-server
+    spec:
+      containers:
+      - image: kamil4444/zad2-source/Dockerfile
+        name: lab10-server
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
